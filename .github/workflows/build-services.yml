@@ -6,7 +6,6 @@ on: push
 defaults:
   run:
     shell: bash
-    working-directory: .
 
 jobs:
   # This workflow contains a single job called "build"
