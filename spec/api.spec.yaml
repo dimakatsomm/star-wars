@@ -1,0 +1,288 @@
+openapi: 3.0.3
+info:
+  title: Star Wars API Limiter Service
+  version: 1.0.0
+  contact:
+    name: Dimakatso
+    email: dimakatsomm@icloud.com
+servers:
+  - url: /
+    description: Self
+  - url: http://localhost:3000
+    description: Local
+tags:
+  - name: auth
+    description: User authentication endpoint
+  - name: star-wars
+    description: Star Wars endpoint
+paths:
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: User login
+      description: User login using email and password
+      operationId: loginUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CredentialsDto'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    default: true
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        $ref: '#/components/schemas/AppUser'
+                      token:
+                        type: string
+                        format: JWT
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+  /auth/register:
+    post:
+      tags:
+        - auth
+      summary: User registration
+      description: User registration using user details
+      operationId: registerUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUserDto'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessDto'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '409':
+          description: Conflicted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+  /auth/logout:
+    post:
+      security:
+        - BearerAuth: []
+      tags:
+        - auth
+      summary: User logout
+      description: Logout user from session
+      operationId: userLogout
+      responses:
+        '302':
+          description: Redirect
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessDto'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+  /star-wars/characters:
+    get:
+      security:
+        - BearerAuth: []
+      tags:
+        - stars-wars
+      summary: Star Wars characters
+      description: Get Star Wars characters
+      operationId: getStarWarsCharacters
+      parameters:
+        - in: query
+          name: search
+          schema:
+            type: string
+            minLength: 3
+          description: Substring to search characters on
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StarWarsCharacter'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '409':
+          description: Conflicted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+
+#components
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT   
+  schemas:
+    # Requests objects
+    CredentialsDto:
+      type: object
+      properties:
+        emailAddress:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+          minLength: 8
+      required: [emailAddress, password]
+    NewUserDto:
+      type: object
+      properties:
+        firstName:
+          type: string
+        surname:
+          type: string
+        emailAddress:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+          minLength: 8
+      required: [firstName, lastName, emailAddress, password]
+      
+    # Response objects
+    AppUser:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        emailAddress:
+          type: string
+          format: email
+      required: [firstName, lastName, emailAddress]
+    StarWarsCharacter:
+      type: object
+      properties: 
+        name:
+          type: string
+        age:
+          type: string
+    SuccessDto:
+      type: object
+      properties:
+        status:
+          type: boolean
+          default: true
+        data:
+          type: object
+          properties:
+            message:
+              type: string
+    ErrorDto:
+      type: object
+      properties:
+        status:
+          type: boolean
+          default: false
+        data:
+          type: object
+          properties:
+            message:
+              type: string
+            error:
+              type: string
+              
