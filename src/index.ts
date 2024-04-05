@@ -21,7 +21,7 @@ app.use('/documentation', serve, setup(swaggerDoc));
 app.use(middleware({ apiSpec: swaggerDoc as OpenAPIV3.Document, validateSecurity: true }));
 
 mongoose.connect(C.MONGO_URI).then(() => {
-  console.log('Connected to Location Tracker DB.');
+  console.log('Connected to DB.');
 });
 
 const redisClient = createClient({
@@ -31,11 +31,12 @@ const redisClient = createClient({
     port: C.REDIS_PORT,
   },
 });
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 redisClient.on('error', (e: any) => {
   console.error(e);
 });
 redisClient.connect().then(() => {
-  console.log('Connected to Location Tracker Redis DB.');
+  console.log('Connected to Redis DB.');
 });
 
 app.listen(C.PORT, () => {
