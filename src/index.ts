@@ -20,7 +20,7 @@ app.use(express.json());
 app.use('/documentation', serve, setup(swaggerDoc));
 app.use(middleware({ apiSpec: swaggerDoc as OpenAPIV3.Document, validateSecurity: true }));
 
-mongoose.connect(C.MONGOURI).then(() => {
+mongoose.connect(C.MONGO_URI).then(() => {
   console.log('Connected to Location Tracker DB.');
 });
 

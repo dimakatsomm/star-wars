@@ -221,19 +221,11 @@ components:
         emailAddress:
           type: string
           format: email
-        username:
-          type: string
-          minLength: 4
         password:
           type: string
           format: password
           minLength: 8
-        totp:
-          type: string
-          format: number
-          minLength: 6
-          maxLength: 6
-      required: [password, totp]
+      required: [emailAddress, password]
     NewUserDto:
       type: object
       properties:
