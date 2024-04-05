@@ -1,0 +1,5 @@
+dist
+.eslintrc.js
+.prettierrc.js
+src/__test__/
+**.test.ts

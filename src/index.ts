@@ -31,6 +31,7 @@ const redisClient = createClient({
     port: C.REDIS_PORT,
   },
 });
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 redisClient.on('error', (e: any) => {
   console.error(e);
 });

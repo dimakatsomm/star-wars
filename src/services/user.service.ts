@@ -4,7 +4,6 @@ import { ICreateUser } from '../interfaces/user.interface';
 import { IUser } from '../database/types/user.type';
 import { User } from '../database/models/user.model';
 
-
 @Service()
 export class UserService {
   /**

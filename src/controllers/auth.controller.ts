@@ -27,7 +27,7 @@ export class AuthController {
   register = async (req: Request, res: Response) => {
     try {
       const newUser = req.body;
-      const userExists = !!await this.userService.checkIfUserExistsByEmail(newUser.emailAddress);
+      const userExists = !!(await this.userService.checkIfUserExistsByEmail(newUser.emailAddress));
       if (userExists) {
         return res
           .status(409)
@@ -36,7 +36,7 @@ export class AuthController {
 
       await this.authService.register({
         emailAddress: newUser.emailAddress,
-        password: newUser.password
+        password: newUser.password,
       });
 
       delete newUser.password;

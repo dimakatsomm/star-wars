@@ -1,4 +1,4 @@
 export interface ICredentials {
-    emailAddress: string;
-    password: string;
+  emailAddress: string;
+  password: string;
 }
