@@ -7,6 +7,6 @@ import { validateUserSession } from '../middleware/auth.middleware';
 const router = express.Router();
 const controller = Container.get(SWAController);
 
-router.post('/characters', validateUserSession, controller.getCharacters);
+router.get('/characters', validateUserSession, controller.getCharacters);
 
 export default router;
