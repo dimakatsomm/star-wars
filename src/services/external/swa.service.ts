@@ -8,7 +8,7 @@ import { redisClient } from '../../index';
 
 @Service()
 export class SWAService {
-  private CHARACTER_INSTANCE = axios.create({ baseURL: `${C.STAR_WARS_API}/people` })
+  private CHARACTER_INSTANCE = axios.create({ baseURL: `${C.STAR_WARS_API}/people` });
 
   /**
    * @method listCharacters
@@ -23,7 +23,7 @@ export class SWAService {
     }
 
     const peopleDetail: [] = await this.CHARACTER_INSTANCE.get(`/?search=${search}`);
-    const characterDetails = peopleDetail.map(character => mapPeopleToCharacter(character));
+    const characterDetails = peopleDetail.map((character) => mapPeopleToCharacter(character));
 
     redisClient.set(search, characterDetails.toString(), { EX: C.REDIS_TTL });
     return characterDetails;
@@ -37,6 +37,6 @@ export class SWAService {
    * @returns {Promise<Array<ICharacter>>}
    */
   private async checkIfSearchExists(search: string): Promise<Array<ICharacter>> {
-    return JSON.parse(await redisClient.get(search) || '[]') as ICharacter[];
+    return JSON.parse((await redisClient.get(search)) || '[]') as ICharacter[];
   }
 }

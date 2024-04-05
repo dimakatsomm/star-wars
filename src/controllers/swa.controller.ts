@@ -25,9 +25,7 @@ export class SWAController {
     try {
       const userExists = !!(await this.userService.checkIfUserExists(req.auth.userId));
       if (!userExists) {
-        return res
-          .status(403)
-          .json({ status: false, data: { message: `Username does not exist.` } });
+        return res.status(403).json({ status: false, data: { message: `Username does not exist.` } });
       }
 
       const characters: ICharacter[] = await this.swaService.listCharacters(req.query?.search as string);
