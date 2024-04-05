@@ -1,9 +1,9 @@
 import { Model, Schema, model } from 'mongoose';
 import { randomUUID } from 'crypto';
 import isEmail from 'validator/lib/isEmail';
-import { IAuthUser } from '../types/auth-user.type';
+import { ICredentials } from '../types/auth-user.type';
 
-const countrySchema = new Schema(
+const authSchema = new Schema(
   {
     _id: {
       type: Schema.Types.UUID,
@@ -37,4 +37,4 @@ const countrySchema = new Schema(
   },
 );
 
-export const Country = model<IAuthUser, Model<IAuthUser>>('Auth_User', countrySchema, 'auth_users');
+export const AuthUser = model<ICredentials, Model<ICredentials>>('Auth_User', authSchema, 'auth_users');

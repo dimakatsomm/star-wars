@@ -87,11 +87,23 @@ paths:
         required: true
       responses:
         '201':
-          description: Created
+          description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SuccessDto'
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    default: true
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        $ref: '#/components/schemas/AppUser'
+                      token:
+                        type: string
+                        format: JWT
         '401':
           description: Unauthorized
           content:
@@ -106,46 +118,6 @@ paths:
                 $ref: '#/components/schemas/ErrorDto'
         '409':
           description: Conflicted
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorDto'
-        '500':
-          description: Invalid request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorDto'
-  /auth/logout:
-    post:
-      security:
-        - BearerAuth: []
-      tags:
-        - auth
-      summary: User logout
-      description: Logout user from session
-      operationId: userLogout
-      responses:
-        '302':
-          description: Redirect
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SuccessDto'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorDto'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorDto'
-        '404':
-          description: Not found
           content:
             application/json:
               schema:
