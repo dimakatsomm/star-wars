@@ -27,13 +27,13 @@ export class AuthController {
   register = async (req: Request, res: Response) => {
     try {
       const newUser = req.body;
+      
       const accountExists = await this.authService.checkIfAccountExists(newUser.emailAddress);
       if (accountExists) {
         return res
           .status(409)
           .json({ status: false, data: { message: `Email address is already in use.` } });
       }
-
 
       const userExists = !!(await this.userService.checkIfUserExistsByEmail(newUser.emailAddress));
       if (userExists) {
