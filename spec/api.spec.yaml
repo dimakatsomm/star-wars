@@ -220,12 +220,12 @@ components:
       properties:
         firstName:
           type: string
-        lastName:
+        surname:
           type: string
         emailAddress:
           type: string
           format: email
-      required: [firstName, lastName, emailAddress]
+      required: [firstName, surname, emailAddress]
     StarWarsCharacter:
       type: object
       properties: 
