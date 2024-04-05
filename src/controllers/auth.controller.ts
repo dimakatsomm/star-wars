@@ -27,11 +27,15 @@ export class AuthController {
   register = async (req: Request, res: Response) => {
     try {
       const newUser = req.body;
+
+      const accountExists = await this.authService.checkIfAccountExists(newUser.emailAddress);
+      if (accountExists) {
+        return res.status(409).json({ status: false, data: { message: `Email address is already in use.` } });
+      }
+
       const userExists = !!(await this.userService.checkIfUserExistsByEmail(newUser.emailAddress));
       if (userExists) {
-        return res
-          .status(409)
-          .json({ status: false, data: { message: `Username or email address is already in use.` } });
+        return res.status(409).json({ status: false, data: { message: `Email address is already in use.` } });
       }
 
       await this.authService.register({
@@ -61,7 +65,7 @@ export class AuthController {
     try {
       const credentials = req.body as ICredentials;
       if (!credentials?.emailAddress) {
-        return res.status(400).json({ status: false, data: { message: `No username or email provided for login.` } });
+        return res.status(400).json({ status: false, data: { message: `No email provided for login.` } });
       }
 
       const correctPassword: boolean = await this.authService.login(credentials);
