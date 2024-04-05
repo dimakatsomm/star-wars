@@ -7,7 +7,7 @@ import { UserService } from '../services/user.service';
 import { generateJwtToken } from '../utils/auth.util';
 import { IUser } from '../database/types/user.type';
 import { ICredentials } from '../interfaces/auth.interface';
-import { handleError } from 'utils/error.util';
+import { handleError } from '../utils/error.util';
 
 @Service()
 export class AuthController {

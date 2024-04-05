@@ -9,4 +9,5 @@ export const JWT_LOGIN_EXPIRES_IN: string = env.JWT_LOGIN_EXPIRES_IN || '1h';
 export const REDIS_PASSWORD: string = env.REDIS_PASSWORD || '';
 export const REDIS_HOST: string = env.REDIS_HOST || 'http://127.0.0.1';
 export const REDIS_PORT: number = Number(env.REDIS_PORT || '6380');
-export const REDIS_TTL: number = 15 * 60;
+export const REDIS_TTL: number = Number(env.CACHE_TIME_IN_MIN || '15') * 60;
+export const STAR_WARS_API: string = 'https://swapi.dev/api';

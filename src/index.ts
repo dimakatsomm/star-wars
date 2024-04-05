@@ -10,6 +10,8 @@ import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
 import { createClient } from 'redis';
 
 import * as C from './constants';
+import authRouter from './routes/auth.route';
+import swaRouter from './routes/swa.route';
 
 const app = express();
 
@@ -19,6 +21,8 @@ const swaggerDoc = loadAll(apiSpec, null, { json: true })[0] as JsonObject;
 app.use(express.json());
 app.use('/documentation', serve, setup(swaggerDoc));
 app.use(middleware({ apiSpec: swaggerDoc as OpenAPIV3.Document, validateSecurity: true }));
+app.use('/auth', authRouter);
+app.use('/star-wars', swaRouter);
 
 mongoose.connect(C.MONGO_URI).then(() => {
   console.log('Connected to DB.');
