@@ -4,7 +4,7 @@
         ".env"
     ],
     "ext": "js,ts,json",
-    "igonore": [
+    "ignore": [
         "src/logs/*",
         "src/**/*.{spec,test}.ts"
     ],
