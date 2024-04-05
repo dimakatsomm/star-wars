@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: "20.11.1"
           cache: "npm"
-          cache-dependency-path: "./lt-services/package-lock.json"
+          cache-dependency-path: "package-lock.json"
       - name: Configure NPM Auth
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PACKAGE_TOKEN }}
