@@ -32,4 +32,14 @@ export class AuthService {
 
     return compareSync(authDetails.password, auth.password);
   }
+
+  /**
+   * @method checkIfAccountExists
+   * @private
+   * @param {string} email
+   * @returns {Promise<IUser>}
+   */
+  async checkIfAccountExists(email: string): Promise<boolean> {
+    return !!(await AuthUser.findOne({ emailAddress: email }));
+  }
 }
