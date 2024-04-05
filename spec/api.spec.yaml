@@ -212,7 +212,7 @@ components:
           type: string
           format: password
           minLength: 8
-      required: [firstName, lastName, emailAddress, password]
+      required: [firstName, surname, emailAddress, password]
       
     # Response objects
     AppUser:

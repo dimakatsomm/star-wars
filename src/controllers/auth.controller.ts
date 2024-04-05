@@ -61,7 +61,7 @@ export class AuthController {
     try {
       const credentials = req.body as ICredentials;
       if (!credentials?.emailAddress) {
-        return res.status(404).json({ status: false, data: { message: `No username or email provided for login.` } });
+        return res.status(400).json({ status: false, data: { message: `No username or email provided for login.` } });
       }
 
       const correctPassword: boolean = await this.authService.login(credentials);
