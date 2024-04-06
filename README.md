@@ -31,3 +31,6 @@ To set up the project locally, follow these steps:
 After setting up the project, you can start making requests to the provided endpoints for authentication, rate-limited access to the Star Wars API, and user management.
 
 For detailed API documentation, refer to the `api.spec.yaml` file in the `spec` directory.
+
+## Documentation
+Please visit the homepage at [https://star-wars-limiter.onrender.com/documentation](https://star-wars-limiter.onrender.com/documentation).
