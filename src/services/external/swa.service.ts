@@ -22,10 +22,10 @@ export class SWAService {
       return characters;
     }
 
-    const peopleDetail: [] = await this.CHARACTER_INSTANCE.get(`/?search=${search}`);
+    const peopleDetail: [] = (await this.CHARACTER_INSTANCE.get(`/?search=${search}`)).data.results;
     const characterDetails = peopleDetail.map((character) => mapPeopleToCharacter(character));
 
-    redisClient.set(search, characterDetails.toString(), { EX: C.REDIS_TTL });
+    redisClient.set(search, JSON.stringify(characterDetails), { EX: C.REDIS_TTL });
     return characterDetails;
   }
 

@@ -5,7 +5,7 @@ import { handleError } from '../utils/error.util';
 
 export const validateUserSession = () => async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const token = (req.headers['Authorization'] as string).split(' ')[1] || '';
+    const token = (req.headers['authorization'] as string).split(' ')[1] || '';
     validateTokenPresence(token);
     const decodedToken = decodeToken(token);
 
