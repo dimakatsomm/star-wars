@@ -28,7 +28,12 @@ export class SWAController {
         return res.status(403).json({ status: false, data: { message: `Username does not exist.` } });
       }
 
-      const characters: ICharacter[] = await this.swaService.listCharacters(req.query?.search as string);
+      const { search } = req.query;
+      if (!search) {
+        return res.status(200).json([]);
+      }
+
+      const characters: ICharacter[] = await this.swaService.listCharacters(search as string);
 
       return res.status(200).json(characters);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
