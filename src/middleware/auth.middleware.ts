@@ -5,7 +5,12 @@ import { handleError } from '../utils/error.util';
 
 export const validateUserSession = () => async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const token = (req.headers['authorization'] as string).split(' ')[1] || '';
+    const authHeader = (req.headers['Authorization'] || req.headers['authorization'] || '') as string;
+    if (!authHeader) {
+      res.status(403).json({ status: false, data: { message: `No user token provided. Access denied.` } });
+    }
+
+    const token = (authHeader).split(' ')[1] || '';
     validateTokenPresence(token);
     const decodedToken = decodeToken(token);
 
