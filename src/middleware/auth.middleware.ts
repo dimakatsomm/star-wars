@@ -10,7 +10,7 @@ export const validateUserSession = () => async (req: Request, res: Response, nex
       res.status(403).json({ status: false, data: { message: `No user token provided. Access denied.` } });
     }
 
-    const token = (authHeader).split(' ')[1] || '';
+    const token = authHeader.split(' ')[1] || '';
     validateTokenPresence(token);
     const decodedToken = decodeToken(token);
 
